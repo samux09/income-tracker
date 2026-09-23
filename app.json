@@ -2,7 +2,7 @@
   "expo": {
     "name": "Income Tracker",
     "slug": "income-tracker",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -17,7 +17,8 @@
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.samux09.incometracker"
+      "package": "com.samux09.incometracker",
+      "versionCode": 2
     },
     "web": {
       "favicon": "./assets/favicon.png",

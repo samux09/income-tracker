@@ -7,7 +7,7 @@ Built with React Native and Expo. It runs on Android and on the web.
 - **Web app:** https://samux09.github.io/income-tracker/
 - **Android APK:** [Releases](https://github.com/samux09/income-tracker/releases)
 
-Your data stays on your device. Use **Settings → Export backup** to keep a copy.
+Your data stays on your device. Use **Profile → Export backup** to keep a copy.
 
 ## Spec-Driven Development
 
