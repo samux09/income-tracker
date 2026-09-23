@@ -1,7 +1,17 @@
 import { describe, expect, it } from '@jest/globals';
 import type { Transaction } from '../types';
-import { dailyTotals, expensesByCategory, groupByDay, inMonth, monthlyTotals, shiftMonth, summarize, totalsByCategory } from './stats';
-import { formatMoney, parseAmount } from './money';
+import {
+  bucketTotals,
+  expensesByCategory,
+  frequentCategories,
+  groupByDay,
+  inMonth,
+  periodBuckets,
+  shiftMonth,
+  summarize,
+  totalsByCategory,
+} from './stats';
+import { formatMoney, money, parseAmount, signedMoney } from './money';
 
 let n = 0;
 const tx = (p: Partial<Transaction>): Transaction => ({
@@ -91,25 +101,40 @@ describe('totalsByCategory', () => {
   });
 });
 
-describe('dailyTotals / monthlyTotals', () => {
-  const txs = [
-    tx({ date: '2026-02-01', amount: 0.1 }),
-    tx({ date: '2026-02-01', amount: 0.2 }),
-    tx({ date: '2026-02-28', amount: 3 }),
-    tx({ date: '2026-02-28', amount: 50, type: 'income' }),
-    tx({ date: '2026-03-01', amount: 7 }),
-  ];
 
-  it('buckets by day of the month', () => {
-    const days = dailyTotals(txs, '2026-02', 'expense');
-    expect(days).toHaveLength(28);
-    expect(days[0]).toBe(0.3);
-    expect(days[27]).toBe(3);
+describe('periodBuckets / bucketTotals', () => {
+  const today = new Date(2026, 8, 23); // Wed 23 Sep 2026
+
+  it('builds consecutive periods ending with the current one', () => {
+    expect(periodBuckets('day', today).at(-1)).toEqual({ start: '2026-09-23', end: '2026-09-24' });
+    expect(periodBuckets('week', today).at(-1)).toEqual({ start: '2026-09-21', end: '2026-09-28' });
+    const months = periodBuckets('month', today);
+    expect(months).toHaveLength(12);
+    expect(months[0]).toEqual({ start: '2025-10-01', end: '2025-11-01' });
+    expect(periodBuckets('year', today)[0]).toEqual({ start: '2022-01-01', end: '2023-01-01' });
   });
 
-  it('buckets by month of the year', () => {
-    const months = monthlyTotals(txs, 2026, 'expense');
-    expect(months).toHaveLength(12);
-    expect(months.slice(0, 3)).toEqual([0, 3.3, 7]);
+  it('sums each bucket for one type', () => {
+    const buckets = periodBuckets('month', today);
+    const totals = bucketTotals(
+      [tx({ date: '2026-09-01', amount: 2 }), tx({ date: '2026-08-31', amount: 1 }), tx({ date: '2026-09-02', type: 'income', amount: 9 })],
+      buckets,
+      'expense',
+    );
+    expect(totals.slice(-2)).toEqual([1, 2]);
+  });
+});
+
+describe('frequentCategories', () => {
+  it('orders expense categories by use', () => {
+    const txs = [tx({ categoryId: 'car' }), tx({ categoryId: 'gasoline' }), tx({ categoryId: 'gasoline' }), tx({ type: 'income', categoryId: 'salary' })];
+    expect(frequentCategories(txs, 5)).toEqual(['gasoline', 'car']);
+  });
+});
+
+describe('money', () => {
+  it('puts a space after a leading symbol', () => {
+    expect(money(1240.5, 'USD')).toMatch(/^\$ 1,240\.50$|1\.?240,50/);
+    expect(signedMoney({ type: 'expense', amount: 5 }, 'USD')).toMatch(/^- /);
   });
 });

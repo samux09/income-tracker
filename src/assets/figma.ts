@@ -39,14 +39,6 @@ export const headerCircles = `<svg width="267" height="219" viewBox="0 0 267 219
 </defs>
 </svg>`;
 
-export const cardDots = `<svg width="21" height="5" viewBox="0 0 21 5" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="Group 8">
-<circle id="Ellipse 10" cx="2.5" cy="2.5" r="2.5" fill="#EEEEEE"/>
-<circle id="Ellipse 11" cx="10.5" cy="2.5" r="2.5" fill="#EEEEEE"/>
-<circle id="Ellipse 12" cx="18.5" cy="2.5" r="2.5" fill="#EEEEEE"/>
-</g>
-</svg>`;
-
 export const arrowDown = `<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="arrow-down 1">
 <path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M5.22675 10.8518C5.279 10.7994 5.34107 10.7578 5.40941 10.7294C5.47775 10.7011 5.55101 10.6865 5.625 10.6865C5.69899 10.6865 5.77225 10.7011 5.84059 10.7294C5.90893 10.7578 5.971 10.7994 6.02325 10.8518L9 13.8296L11.9767 10.8518C12.0824 10.7461 12.2256 10.6868 12.375 10.6868C12.5244 10.6868 12.6676 10.7461 12.7732 10.8518C12.8789 10.9574 12.9382 11.1006 12.9382 11.25C12.9382 11.3994 12.8789 11.5426 12.7732 11.6483L9.39825 15.0233C9.346 15.0756 9.28393 15.1172 9.21559 15.1456C9.14725 15.1739 9.07399 15.1885 9 15.1885C8.92601 15.1885 8.85275 15.1739 8.78441 15.1456C8.71607 15.1172 8.654 15.0756 8.60175 15.0233L5.22675 11.6483C5.17437 11.596 5.13281 11.5339 5.10445 11.4656C5.07609 11.3972 5.06149 11.324 5.06149 11.25C5.06149 11.176 5.07609 11.1028 5.10445 11.0344C5.13281 10.9661 5.17437 10.904 5.22675 10.8518V10.8518Z" fill="white"/>
@@ -75,12 +67,6 @@ export const chevronDownDark = `<svg width="20" height="20" viewBox="0 0 20 20" 
 export const calendar = `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="Icon/calendar">
 <path id="Icon" fill-rule="evenodd" clip-rule="evenodd" d="M6 2C5.44772 2 5 2.44772 5 3V4H4C2.89543 4 2 4.89543 2 6V16C2 17.1046 2.89543 18 4 18H16C17.1046 18 18 17.1046 18 16V6C18 4.89543 17.1046 4 16 4H15V3C15 2.44772 14.5523 2 14 2C13.4477 2 13 2.44772 13 3V4H7V3C7 2.44772 6.55228 2 6 2ZM6 7C5.44772 7 5 7.44772 5 8C5 8.55228 5.44772 9 6 9H14C14.5523 9 15 8.55228 15 8C15 7.44772 14.5523 7 14 7H6Z" fill="#888888"/>
-</g>
-</svg>`;
-
-export const plusCircle = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="Icon/plus-circle">
-<path id="Icon" fill-rule="evenodd" clip-rule="evenodd" d="M12 21.6C17.3019 21.6 21.6 17.3019 21.6 12C21.6 6.69807 17.3019 2.4 12 2.4C6.69807 2.4 2.4 6.69807 2.4 12C2.4 17.3019 6.69807 21.6 12 21.6ZM13.2 8.4C13.2 7.73726 12.6627 7.2 12 7.2C11.3373 7.2 10.8 7.73726 10.8 8.4V10.8H8.4C7.73726 10.8 7.2 11.3373 7.2 12C7.2 12.6627 7.73726 13.2 8.4 13.2H10.8V15.6C10.8 16.2627 11.3373 16.8 12 16.8C12.6627 16.8 13.2 16.2627 13.2 15.6V13.2H15.6C16.2627 13.2 16.8 12.6627 16.8 12C16.8 11.3373 16.2627 10.8 15.6 10.8H13.2V8.4Z" fill="#666666"/>
 </g>
 </svg>`;
 
@@ -164,3 +150,10 @@ export const userInactive = `<svg width="34.75" height="36" viewBox="0 0 34.75 3
 </svg>`;
 
 export const fabPlus = `<svg width="24" height="24" viewBox="220 48.125 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path id="Vector_2" d="M242.547 60.125H221.453M232 49.5781V70.6719V49.5781Z" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+// Wallet and profile tab icons (active states drawn to match the Figma active home/chart icons).
+export const walletInactive = `<svg width="34.75" height="36" viewBox="0 0 34.75 36" fill="none"><path d="M5.43 9v18a2.2 2.2 0 0 0 2.17 2.25h21.72a1.1 1.1 0 0 0 1.09-1.13V12.38a1.1 1.1 0 0 0-1.09-1.13H7.6A2.2 2.2 0 0 1 5.43 9zm0 0A2.2 2.2 0 0 1 7.6 6.75h18.46" stroke="#AAAAAA" stroke-width="1.69" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24.43" cy="20.25" r="1.69" fill="#AAAAAA"/></svg>`;
+
+export const walletActive = `<svg width="34.75" height="36" viewBox="0 0 34.75 36" fill="none"><defs><linearGradient id="wg" x1="17" y1="6" x2="17" y2="30" gradientUnits="userSpaceOnUse"><stop stop-color="#549994"/><stop offset="1" stop-color="#408782"/></linearGradient></defs><path d="M4.5 10.5a3.5 3.5 0 0 1 3.5-3.5h19v4h2.3a1.7 1.7 0 0 1 1.7 1.7v15.6a1.7 1.7 0 0 1-1.7 1.7H8a3.5 3.5 0 0 1-3.5-3.5z" fill="url(#wg)"/><rect x="21" y="18.5" width="6" height="3.5" rx="1.75" fill="#FFFFFF"/></svg>`;
+
+export const userActive = `<svg width="34.75" height="36" viewBox="0 0 34.75 36" fill="none"><defs><linearGradient id="ug" x1="17" y1="4" x2="17" y2="31" gradientUnits="userSpaceOnUse"><stop stop-color="#549994"/><stop offset="1" stop-color="#408782"/></linearGradient></defs><circle cx="17.375" cy="13" r="8.5" fill="url(#ug)"/><path d="M3.5 31c2.6-5.2 7.8-8.5 13.9-8.5s11.3 3.3 13.9 8.5z" fill="url(#ug)"/></svg>`;

@@ -18,6 +18,8 @@ export interface Transaction {
 
 export interface Settings {
   currency: string;
+  /** Shown in the home greeting and on the profile screen. */
+  name?: string;
 }
 
 export interface AppData {

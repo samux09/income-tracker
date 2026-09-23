@@ -1,60 +1,49 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { router } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { getCategory } from '../categories';
-import { formatDateLabel, formatMoney } from '../lib/money';
+import { formatDateLabel, signedMoney } from '../lib/money';
 import { toISODate } from '../lib/stats';
 import { font, useTheme } from '../theme';
 import type { Transaction } from '../types';
-
-interface Props {
-  tx: Transaction;
-  currency: string;
-  onPress: () => void;
-}
+import { CategoryTile } from './ui';
 
 export function relativeDay(iso: string): string {
-  const today = new Date();
-  if (iso === toISODate(today)) return 'Today';
-  if (iso === toISODate(new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1))) return 'Yesterday';
+  const now = new Date();
+  if (iso === toISODate(now)) return 'Today';
+  if (iso === toISODate(new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1))) return 'Yesterday';
   return formatDateLabel(iso);
 }
 
-export function TransactionRow({ tx, currency, onPress }: Props) {
+/** Transaction history row: icon tile, title, date and signed amount. Opens the details screen. */
+export function TransactionRow({ tx, currency }: { tx: Transaction; currency: string }) {
   const t = useTheme();
   const cat = getCategory(tx.categoryId);
-  const isIncome = tx.type === 'income';
+  const title = tx.note || cat.label;
 
   return (
     <Pressable
-      onPress={onPress}
+      onPress={() => router.push({ pathname: '/details', params: { id: tx.id } })}
       style={({ pressed }) => [styles.row, { opacity: pressed ? 0.7 : 1 }]}
       accessibilityRole="button"
-      accessibilityLabel={`${cat.label} ${formatMoney(tx.amount, currency)}`}
+      accessibilityLabel={`${title}, ${signedMoney(tx, currency)}, ${relativeDay(tx.date)}`}
     >
-      <View style={[styles.icon, { backgroundColor: t.tile }]}>
-        <MaterialCommunityIcons name={cat.icon} size={28} color={cat.color} />
-      </View>
+      <CategoryTile categoryId={tx.categoryId} />
       <View style={styles.body}>
         <Text style={[styles.title, { color: t.title }]} numberOfLines={1}>
-          {tx.note || cat.label}
+          {title}
           {tx.source === 'auto' ? '  ⚡' : ''}
         </Text>
         <Text style={[styles.sub, { color: t.muted }]} numberOfLines={1}>
-          {tx.note ? `${cat.label} · ` : ''}
           {relativeDay(tx.date)}
         </Text>
       </View>
-      <Text style={[styles.amount, { color: isIncome ? t.income : t.expense }]}>
-        {isIncome ? '+ ' : '- '}
-        {formatMoney(tx.amount, currency)}
-      </Text>
+      <Text style={[styles.amount, { color: tx.type === 'income' ? t.income : t.expense }]}>{signedMoney(tx, currency)}</Text>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   row: { flexDirection: 'row', alignItems: 'center', gap: 9, paddingHorizontal: 22, paddingVertical: 8 },
-  icon: { width: 50, height: 50, borderRadius: 8, alignItems: 'center', justifyContent: 'center' },
   body: { flex: 1, gap: 6 },
   title: { fontFamily: font.medium, fontSize: 16, letterSpacing: -0.32 },
   sub: { fontFamily: font.regular, fontSize: 13, letterSpacing: -0.26 },

@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
-import Svg, { Defs, Line, LinearGradient, Path, Stop, SvgXml } from 'react-native-svg';
+import Svg, { Defs, Line, LinearGradient, Path, Rect, Stop, SvgXml } from 'react-native-svg';
 import { chartDot, tooltip } from '../assets/figma';
 import { font, useTheme } from '../theme';
 
@@ -66,9 +66,20 @@ export function LineChart({ values, labels, selected, onSelect, formatValue }: P
             <Stop offset="0" stopColor={t.primary} stopOpacity={0.3} />
             <Stop offset="1" stopColor={t.primary} stopOpacity={0} />
           </LinearGradient>
+          <LinearGradient id="fadeL" x1="0" y1="0" x2="1" y2="0">
+            <Stop offset="0" stopColor={t.bg} stopOpacity={1} />
+            <Stop offset="1" stopColor={t.bg} stopOpacity={0} />
+          </LinearGradient>
+          <LinearGradient id="fadeR" x1="1" y1="0" x2="0" y2="0">
+            <Stop offset="0" stopColor={t.bg} stopOpacity={1} />
+            <Stop offset="1" stopColor={t.bg} stopOpacity={0} />
+          </LinearGradient>
         </Defs>
         <Path d={area} fill="url(#area)" />
         <Path d={line} stroke={t.primary} strokeWidth={2} strokeLinecap="round" fill="none" />
+        {/* Soft fade at both edges, as in the design. */}
+        <Rect x={0} y={0} width={18} height={bottom + 4} fill="url(#fadeL)" />
+        <Rect x={width - 18} y={0} width={18} height={bottom + 4} fill="url(#fadeR)" />
         {sel ? <Line x1={sel.x} y1={sel.y} x2={sel.x} y2={bottom} stroke={t.muted} strokeWidth={1} strokeDasharray="4 4" /> : null}
       </Svg>
 
