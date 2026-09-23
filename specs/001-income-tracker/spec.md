@@ -35,7 +35,7 @@ spend (expenses), grouped by category, so I can see where my money goes each mon
 | US-6 | edit or delete a transaction | Tap an item to open it for editing. Deleting asks for confirmation. |
 | US-7 | keep my data after closing the app | Data is stored on the device and survives restarts. |
 | US-8 | back up and restore my data | Export all data as JSON (share or download). Import JSON replaces the current data after confirmation. |
-| US-9 | choose my currency | A setting sets the currency code (default `USD`). Amounts are formatted with it. |
+| US-9 | choose my currency | A setting sets the currency code (default `MXN`, Mexican peso). Amounts use the short symbol, e.g. `$1,234.50`, not `MX$1,234.50`. |
 
 ## 5. Categories
 

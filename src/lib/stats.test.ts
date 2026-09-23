@@ -1,7 +1,7 @@
 import { describe, expect, it } from '@jest/globals';
 import type { Transaction } from '../types';
 import { expensesByCategory, groupByDay, inMonth, shiftMonth, summarize } from './stats';
-import { parseAmount } from './money';
+import { formatMoney, parseAmount } from './money';
 
 let n = 0;
 const tx = (p: Partial<Transaction>): Transaction => ({
@@ -69,5 +69,14 @@ describe('parseAmount', () => {
     ['', NaN],
   ])('%s -> %s', (input, expected) => {
     expect(parseAmount(input)).toBe(expected);
+  });
+});
+
+describe('formatMoney', () => {
+  it('shows pesos with the short $ symbol, not MX$', () => {
+    const s = formatMoney(1234.5, 'MXN');
+    expect(s).toContain('1,234.50');
+    expect(s).toContain('$');
+    expect(s).not.toContain('MX');
   });
 });

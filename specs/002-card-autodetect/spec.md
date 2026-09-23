@@ -20,8 +20,8 @@ or suggested for one-tap confirmation, without typing it in.
 ## Chosen approach: A (with B as an optional fallback)
 
 1. The user picks which apps to watch, for example the bank app, and grants notification access.
-2. For each notification from a watched app, parse the amount and merchant using regex rules, one set per bank (configurable, with good defaults for common formats such as `$1,234.56`, `USD 12.00`, `12,50 €`).
-3. Guess the category from merchant keywords (e.g. `SHELL|TEXACO|GAS` → Gasoline, `NETFLIX|SPOTIFY` → Subscriptions, `FARMACIA|PHARMACY|CVS|WALGREENS` → Pharmacy, `WALMART|SUPER` → Supermarket).
+2. For each notification from a watched app, parse the amount and merchant using regex rules, one set per bank (configurable, with good defaults for common Mexican bank formats such as `$1,234.56`, `$1,234.56 MXN`, `MXN 12.00`).
+3. Guess the category from merchant keywords (e.g. `PEMEX|OXXO GAS|SHELL|BP|G500` → Gasoline, `NETFLIX|SPOTIFY|DISNEY|MAX` → Subscriptions, `FARMACIA|GUADALAJARA|SIMILARES|BENAVIDES|SAN PABLO` → Pharmacy, `WALMART|SORIANA|CHEDRAUI|BODEGA AURRERA|LA COMER|HEB` → Supermarket).
 4. Save it as `source: 'auto'` in a **Pending** inbox. The user confirms, edits or dismisses it (this avoids duplicates and false positives). A setting can turn on “auto-confirm”.
 
 ## Open questions (need input)

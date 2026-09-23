@@ -1,8 +1,8 @@
-export const CURRENCIES = ['USD', 'MXN', 'EUR', 'COP', 'PEN', 'ARS', 'CLP', 'GTQ', 'DOP', 'CAD', 'GBP', 'BRL'];
+export const CURRENCIES = ['MXN', 'USD', 'EUR', 'COP', 'PEN', 'ARS', 'CLP', 'GTQ', 'DOP', 'CAD', 'GBP', 'BRL'];
 
 export function formatMoney(amount: number, currency: string): string {
   try {
-    return new Intl.NumberFormat(undefined, { style: 'currency', currency }).format(amount);
+    return new Intl.NumberFormat(undefined, { style: 'currency', currency, currencyDisplay: 'narrowSymbol' }).format(amount);
   } catch {
     // Unknown currency code or missing Intl support.
     return `${currency} ${amount.toFixed(2)}`;

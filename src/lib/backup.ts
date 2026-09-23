@@ -42,5 +42,5 @@ function validate(raw: unknown): AppData {
       t && typeof t.id === 'string' && (t.type === 'income' || t.type === 'expense') &&
       typeof t.amount === 'number' && typeof t.date === 'string' && typeof t.categoryId === 'string',
   );
-  return { version: 1, transactions, settings: { currency: d.settings?.currency ?? 'USD' } };
+  return { version: 1, transactions, settings: { currency: d.settings?.currency ?? 'MXN' } };
 }

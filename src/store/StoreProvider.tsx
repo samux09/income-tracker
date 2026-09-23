@@ -4,7 +4,7 @@ import type { AppData, Settings, Transaction } from '../types';
 
 const STORAGE_KEY = 'income-tracker:data:v1';
 
-export const EMPTY_DATA: AppData = { version: 1, transactions: [], settings: { currency: 'USD' } };
+export const EMPTY_DATA: AppData = { version: 1, transactions: [], settings: { currency: 'MXN' } };
 
 type Action =
   | { type: 'load'; data: AppData }
