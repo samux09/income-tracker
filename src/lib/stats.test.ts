@@ -1,6 +1,6 @@
 import { describe, expect, it } from '@jest/globals';
 import type { Transaction } from '../types';
-import { expensesByCategory, groupByDay, inMonth, shiftMonth, summarize } from './stats';
+import { dailyTotals, expensesByCategory, groupByDay, inMonth, monthlyTotals, shiftMonth, summarize, totalsByCategory } from './stats';
 import { formatMoney, parseAmount } from './money';
 
 let n = 0;
@@ -78,5 +78,38 @@ describe('formatMoney', () => {
     expect(s).toContain('1,234.50');
     expect(s).toContain('$');
     expect(s).not.toContain('MX');
+  });
+});
+
+describe('totalsByCategory', () => {
+  it('only counts the requested type', () => {
+    const r = totalsByCategory(
+      [tx({ type: 'income', categoryId: 'salary', amount: 100 }), tx({ categoryId: 'car', amount: 5 })],
+      'income',
+    );
+    expect(r).toEqual([{ categoryId: 'salary', total: 100, count: 1, share: 1 }]);
+  });
+});
+
+describe('dailyTotals / monthlyTotals', () => {
+  const txs = [
+    tx({ date: '2026-02-01', amount: 0.1 }),
+    tx({ date: '2026-02-01', amount: 0.2 }),
+    tx({ date: '2026-02-28', amount: 3 }),
+    tx({ date: '2026-02-28', amount: 50, type: 'income' }),
+    tx({ date: '2026-03-01', amount: 7 }),
+  ];
+
+  it('buckets by day of the month', () => {
+    const days = dailyTotals(txs, '2026-02', 'expense');
+    expect(days).toHaveLength(28);
+    expect(days[0]).toBe(0.3);
+    expect(days[27]).toBe(3);
+  });
+
+  it('buckets by month of the year', () => {
+    const months = monthlyTotals(txs, 2026, 'expense');
+    expect(months).toHaveLength(12);
+    expect(months.slice(0, 3)).toEqual([0, 3.3, 7]);
   });
 });

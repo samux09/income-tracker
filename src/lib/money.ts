@@ -1,11 +1,17 @@
 export const CURRENCIES = ['MXN', 'USD', 'EUR', 'COP', 'PEN', 'ARS', 'CLP', 'GTQ', 'DOP', 'CAD', 'GBP', 'BRL'];
 
-export function formatMoney(amount: number, currency: string): string {
+/** `whole` drops the cents, for compact labels like chart tooltips. */
+export function formatMoney(amount: number, currency: string, whole = false): string {
   try {
-    return new Intl.NumberFormat(undefined, { style: 'currency', currency, currencyDisplay: 'narrowSymbol' }).format(amount);
+    return new Intl.NumberFormat(undefined, {
+      style: 'currency',
+      currency,
+      currencyDisplay: 'narrowSymbol',
+      ...(whole ? { minimumFractionDigits: 0, maximumFractionDigits: 0 } : {}),
+    }).format(amount);
   } catch {
     // Unknown currency code or missing Intl support.
-    return `${currency} ${amount.toFixed(2)}`;
+    return `${currency} ${amount.toFixed(whole ? 0 : 2)}`;
   }
 }
 
