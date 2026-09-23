@@ -1,0 +1,43 @@
+name: Build Android APK
+
+# Push a tag like v1.0.0 to build an APK and attach it to a GitHub Release.
+# Run manually from the Actions tab to get the APK as a workflow artifact.
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v4
+      - run: npm ci
+      - run: npx expo prebuild -p android --no-install
+      # Release builds are signed with the template's debug keystore. The key is
+      # the same on every build, so new APKs install over old ones. That's fine
+      # for sideloading, but switch to your own keystore before using Google Play.
+      - run: ./gradlew assembleRelease --no-daemon
+        working-directory: android
+      - run: mv android/app/build/outputs/apk/release/app-release.apk income-tracker-${{ github.ref_name }}.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: income-tracker-apk
+          path: income-tracker-*.apk
+      - if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: income-tracker-*.apk
+          generate_release_notes: true
